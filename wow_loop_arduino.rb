@@ -8,6 +8,9 @@ require 'pry'
 
 arduino = ArduinoFirmata.connect
 
+#test again!
+#
+#
 count = 0
 still = 0
 found = 0
