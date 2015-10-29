@@ -12,6 +12,8 @@ count = 0
 still = 0
 found = 0
 
+# testing github le hub
+
 while count <= 50 do
   if @doc.text.include?("Chris")
     found = 0
