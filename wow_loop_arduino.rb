@@ -24,7 +24,7 @@ still = 0
 found = 0
 
 while count <= 50 do
-  if @pr >= 0
+  if @pr > 0
     found = 0
     found += 1
     puts "*****************  !!Open Pull Request!!  *********************"
