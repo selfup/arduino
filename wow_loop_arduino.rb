@@ -15,6 +15,8 @@ def parse(response)
   JSON.parse(response.body)
 end
 
+# testing
+
 @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
 
 arduino = ArduinoFirmata.connect
