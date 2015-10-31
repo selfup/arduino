@@ -23,6 +23,8 @@ count = 0
 still = 0
 found = 0
 
+# testing github le hub
+
 while count <= 50 do
   if @pr >= 0
     found = 0
