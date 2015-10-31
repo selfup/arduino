@@ -1,10 +1,21 @@
 require 'rubygems'
 require 'arduino_firmata'
-require 'nokogiri'
 require 'open-uri'
+require 'hurley'
+require 'json'
 require 'pry'
 
-@doc = Nokogiri::HTML(open("http://example.com"))
+user = "selfup"
+repo = "arduino"
+connection = Hurley::Client.new("https://api.github.com")
+connection.query[:access_token] = ENV["TOKEN"]
+connection.header[:accept] = "application/vnd.github+json"
+
+def parse(response)
+  JSON.parse(response.body)
+end
+
+@pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
 
 arduino = ArduinoFirmata.connect
 
@@ -13,10 +24,10 @@ still = 0
 found = 0
 
 while count <= 50 do
-  if @doc.text.include?("Chris")
+  if @pr >= 0
     found = 0
     found += 1
-    puts "*****************  I found Chris!  *********************"
+    puts "*****************  !!Open Pull Request!!  *********************"
     arduino.digital_write 13, true
     sleep(0.5)
     arduino.digital_write 13, false
@@ -48,7 +59,7 @@ while count <= 50 do
     count = 0
     still = 0
     puts "making sure"
-    @doc = Nokogiri::HTML(open("http://example.com"))
+    @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
   elsif count == 3
     sleep(5)
     puts "Still waiting"
@@ -89,7 +100,7 @@ while count <= 50 do
     puts "fetching"
     sleep(1)
     count += 1
-    @doc = Nokogiri::HTML(open("http://example.com"))
+    @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
     sleep(1)
     puts "fetched! \n count = #{count} before 'Still Waiting'"
     sleep(5)
