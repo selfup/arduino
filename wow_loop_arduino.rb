@@ -37,12 +37,14 @@ loop do
       arduino.digital_write light, false
       sleep(0.5)
     end
-    5.times do
-      arduino.digital_write sound, true
-      sleep(0.5)
-      arduino.digital_write sound, false
-      sleep(0.5)
+    2.times do
+      0.upto(4) do |i|
+        arduino.analog_write 11, i  # <= 0 ~ 255
+        sleep(2)
+      end
+      sleep(0.2)
     end
+    arduino.analog_write 11, 0
     count = 0
     still = 0
     puts "making sure"
