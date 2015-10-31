@@ -2,21 +2,35 @@ require 'rubygems'
 require 'arduino_firmata'
 require 'nokogiri'
 require 'open-uri'
+require 'hurley'
 require 'pry'
+
+attr_reader :user, :connection, :repo
+
+def initialize
+  @user = "selfup"
+  @repo = "arduino"
+  @connection = Hurley::Client.new("https://api.github.com")
+  connection.query[:access_token] = ENV["TOKEN"]
+  connection.header[:accept] = "application/vnd.github+json"
+end
+
+def parse(response)
+  JSON.parse(response.body)
+end
 
 @doc = Nokogiri::HTML(open("http://example.com"))
 
+@pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
+
 arduino = ArduinoFirmata.connect
 
-#test again!
-#
-#
 count = 0
 still = 0
 found = 0
 
 while count <= 50 do
-  if @doc.text.include?("Chris")
+  if @pr >= 0
     found = 0
     found += 1
     puts "*****************  I found Chris!  *********************"
@@ -51,7 +65,7 @@ while count <= 50 do
     count = 0
     still = 0
     puts "making sure"
-    @doc = Nokogiri::HTML(open("http://example.com"))
+    @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
   elsif count == 3
     sleep(5)
     puts "Still waiting"
@@ -92,7 +106,7 @@ while count <= 50 do
     puts "fetching"
     sleep(1)
     count += 1
-    @doc = Nokogiri::HTML(open("http://example.com"))
+    @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
     sleep(1)
     puts "fetched! \n count = #{count} before 'Still Waiting'"
     sleep(5)
