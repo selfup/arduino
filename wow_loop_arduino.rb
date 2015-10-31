@@ -5,8 +5,8 @@ require 'hurley'
 require 'json'
 require 'pry'
 
-user = "selfup"
-repo = "arduino"
+user = "jphoenix86"
+repo = "melt_and_pourium"
 connection = Hurley::Client.new("https://api.github.com")
 connection.query[:access_token] = ENV["TOKEN"]
 connection.header[:accept] = "application/vnd.github+json"
