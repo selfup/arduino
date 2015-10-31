@@ -1,25 +1,19 @@
 require 'rubygems'
 require 'arduino_firmata'
-require 'nokogiri'
 require 'open-uri'
 require 'hurley'
+require 'json'
 require 'pry'
 
-attr_reader :user, :connection, :repo
-
-def initialize
-  @user = "selfup"
-  @repo = "arduino"
-  @connection = Hurley::Client.new("https://api.github.com")
-  connection.query[:access_token] = ENV["TOKEN"]
-  connection.header[:accept] = "application/vnd.github+json"
-end
+user = "selfup"
+repo = "arduino"
+connection = Hurley::Client.new("https://api.github.com")
+connection.query[:access_token] = ENV["TOKEN"]
+connection.header[:accept] = "application/vnd.github+json"
 
 def parse(response)
   JSON.parse(response.body)
 end
-
-@doc = Nokogiri::HTML(open("http://example.com"))
 
 @pr = parse(connection.get("repos/#{user}/#{repo}/pulls")).count
 
@@ -33,7 +27,7 @@ while count <= 50 do
   if @pr >= 0
     found = 0
     found += 1
-    puts "*****************  I found Chris!  *********************"
+    puts "*****************  !!Open Pull Request!!  *********************"
     arduino.digital_write 13, true
     sleep(0.5)
     arduino.digital_write 13, false
