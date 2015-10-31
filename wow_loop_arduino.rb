@@ -31,20 +31,34 @@ loop do
     found = 0
     found += 1
     puts "*****************  !!Open Pull Request!!  *********************"
-    5.times do
+    sleep(1)
+    3.times do
       arduino.digital_write light, true
-      sleep(0.5)
+      arduino.analog_write 11, 2
+      sleep(0.2)
+      arduino.analog_write 11, 0
       arduino.digital_write light, false
-      sleep(0.5)
-    end
-    2.times do
-      0.upto(4) do |i|
-        arduino.analog_write 11, i  # <= 0 ~ 255
-        sleep(2)
-      end
       sleep(0.2)
     end
-    arduino.analog_write 11, 0
+    sleep(0.2)
+    3.times do
+      arduino.digital_write light, true
+      arduino.analog_write 11, 2  # <= 0 ~ 255
+      sleep(0.6)
+      arduino.analog_write 11, 0
+      arduino.digital_write light, false
+      sleep(0.2)
+    end
+    sleep(0.2)
+    3.times do
+      arduino.digital_write light, true
+      arduino.analog_write 11, 2
+      sleep(0.2)
+      arduino.analog_write 11, 0
+      arduino.digital_write light, false
+      sleep(0.2)
+    end
+    sleep(1)
     count = 0
     still = 0
     puts "making sure"
