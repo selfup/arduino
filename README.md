@@ -10,6 +10,8 @@
 
 If methods are created first and then called in a loop do or a while loop, the last sleep function hangs for more that the intended amount of time. Everything must be set and called within the loop. Looks like classes are going to be the best way to organize in the future.
 
+Now if you make the methods include an enum the behavior stays as expected. Very interesting!
+
 There is a Gemfile included, just bundle and run any script!
 
 If any additional hardware is needed there will be comments at the top of the ruby file.
