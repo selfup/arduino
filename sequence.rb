@@ -21,4 +21,5 @@ module Sequence
       sleep(0.2)
     end
   end
+  
 end
