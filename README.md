@@ -17,5 +17,3 @@ There is a Gemfile included, just bundle and run any script!
 If any additional hardware is needed there will be comments at the top of the ruby file.
 
 Enjoy!
-
-This is so awesome!
